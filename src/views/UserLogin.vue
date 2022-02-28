@@ -2,7 +2,7 @@
  * @Author: skaarf9
  * @LastEditors: skaarf9
  * @Date: 2022-02-25 15:39:57
- * @LastEditTime: 2022-02-26 21:43:34
+ * @LastEditTime: 2022-02-27 21:05:43
  * @Description: file content
  * @FilePath: \vueblog-vue\src\views\UserLogin.vue
 -->
@@ -78,8 +78,8 @@ const checkPassword = (rule: any, value: any, callback: any) => {
 }; */
 
 const ruleForm = reactive({
-  username: "",
-  password: "",
+  username: "markerhub",
+  password: "111111",
 });
 
 const rules = reactive({

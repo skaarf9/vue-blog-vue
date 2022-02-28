@@ -2,7 +2,7 @@
  * @Author: skaarf9
  * @LastEditors: skaarf9
  * @Date: 2022-02-25 19:33:23
- * @LastEditTime: 2022-02-26 17:47:28
+ * @LastEditTime: 2022-02-27 21:08:48
  * @Description: file content
  * @FilePath: \vueblog-vue\src\store\index.ts
  */
@@ -31,6 +31,8 @@ export default createStore({
     REMOVE_INFO: (state) => {
       state.token = "";
       state.userInfo = new Object();
+      localStorage.removeItem("token");
+      sessionStorage.removeItem("userInfo");
     },
   },
   actions: {},

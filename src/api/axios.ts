@@ -2,7 +2,7 @@
  * @Author: skaarf9
  * @LastEditors: skaarf9
  * @Date: 2022-02-26 20:10:22
- * @LastEditTime: 2022-02-26 22:01:01
+ * @LastEditTime: 2022-02-27 23:48:50
  * @Description: file content
  * @FilePath: \vueblog-vue\src\api\axios.ts
  */
@@ -25,9 +25,9 @@ axios.interceptors.response.use(
   (response) => {
     const res = response.data;
     // console.log(response.headers);
-    console.log("----------");
-    console.log(res);
-    console.log("----------");
+    // console.log("----------");
+    // console.log(res);
+    // console.log("----------");
     if (res.code === 200) {
       return response;
     } else {

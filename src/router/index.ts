@@ -2,7 +2,7 @@
  * @Author: skaarf9
  * @LastEditors: skaarf9
  * @Date: 2022-02-25 01:00:21
- * @LastEditTime: 2022-02-25 19:44:30
+ * @LastEditTime: 2022-02-28 00:29:20
  * @Description: file content
  * @FilePath: \vueblog-vue\src\router\index.ts
  */
@@ -29,11 +29,6 @@ const routes = [
     component: userBlogs,
   },
   {
-    path: "/blog/add",
-    name: "blogEdit",
-    component: blogEdit,
-  },
-  {
     path: "/blog/:blogId/edit",
     name: "blogEdit",
     component: blogEdit,
@@ -42,6 +37,11 @@ const routes = [
     path: "/blog/:blogId",
     name: "blogDetail",
     component: blogDetail,
+  },
+  {
+    path: "/blog/add",
+    name: "blogEdit",
+    component: blogEdit,
   },
 ];
 
