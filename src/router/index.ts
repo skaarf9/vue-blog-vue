@@ -2,7 +2,7 @@
  * @Author: skaarf9
  * @LastEditors: skaarf9
  * @Date: 2022-02-25 01:00:21
- * @LastEditTime: 2022-02-28 22:02:46
+ * @LastEditTime: 2022-03-01 00:56:09
  * @Description: file content
  * @FilePath: \vueblog-vue\src\router\index.ts
  */
@@ -37,11 +37,17 @@ const routes = [
     path: "/blog/:blogId/edit",
     name: "blogEditWithId",
     component: blogEdit,
+    meta: {
+      requireAuth: true,
+    }
   },
   {
     path: "/blog/add",
     name: "blogEdit",
     component: blogEdit,
+    meta: {
+      requireAuth: true,
+    }
   },
 ];
 

@@ -2,7 +2,7 @@
  * @Author: skaarf9
  * @LastEditors: skaarf9
  * @Date: 2022-02-25 15:44:26
- * @LastEditTime: 2022-02-28 16:01:08
+ * @LastEditTime: 2022-03-01 01:09:35
  * @Description: file content
  * @FilePath: \vueblog-vue\src\views\UserBlogs.vue
 -->
@@ -75,7 +75,6 @@ const page = (currentPage: number) => {
     total.value = res.data.data.total;
     pageSize.value = res.data.data.size;
     blogsInfo.value = res.data.data.records;
-    console.log(blogsInfo.value);
   });
 };
 page(1);
