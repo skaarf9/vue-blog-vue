@@ -2,7 +2,7 @@
  * @Author: skaarf9
  * @LastEditors: skaarf9
  * @Date: 2022-02-26 22:04:27
- * @LastEditTime: 2022-02-28 02:13:53
+ * @LastEditTime: 2022-02-28 21:25:30
  * @Description: file content
  * @FilePath: \vueblog-vue\src\components\BlogHeader.vue
 -->
@@ -20,11 +20,7 @@
     <div class="menu">
       <span><el-link href="/blogs">主页</el-link></span>
       <el-divider direction="vertical"></el-divider>
-      <span
-        ><el-link type="success" href="/blog/add" target="_blank"
-          >发表博客</el-link
-        ></span
-      >
+      <span><el-link type="success" href="/blog/add">发表博客</el-link></span>
       <el-divider direction="vertical" border-style="dashed"></el-divider>
       <el-link type="primary" v-show="!hasLogin" href="/login">登录</el-link>
       <span

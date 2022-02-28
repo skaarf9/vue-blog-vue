@@ -1,161 +1,115 @@
+/* eslint-disable no-undef */
 <!--
  * @Author: skaarf9
  * @LastEditors: skaarf9
  * @Date: 2022-02-25 15:45:56
- * @LastEditTime: 2022-02-28 16:21:01
+ * @LastEditTime: 2022-02-28 22:45:11
  * @Description: file content
  * @FilePath: \vueblog-vue\src\views\BlogEdit.vue
 -->
 <!-- BlogEdit -->
 <template>
-  <header></header>
-  <el-form
-    ref="ruleFormRef"
-    :model="ruleForm"
-    :rules="rules"
-    label-width="120px"
-    class="demo-ruleForm"
-    :size="formSize"
-  >
-    <el-form-item label="Activity name" prop="name">
-      <el-input v-model="ruleForm.name"></el-input>
-    </el-form-item>
-    <el-form-item label="Activity zone" prop="region">
-      <el-select v-model="ruleForm.region" placeholder="Activity zone">
-        <el-option label="Zone one" value="shanghai"></el-option>
-        <el-option label="Zone two" value="beijing"></el-option>
-      </el-select>
-    </el-form-item>
-    <el-form-item label="Activity time" required>
-      <el-col :span="11">
-        <el-form-item prop="date1">
-          <el-date-picker
-            v-model="ruleForm.date1"
-            type="date"
-            placeholder="Pick a date"
-            style="width: 100%"
-          ></el-date-picker>
-        </el-form-item>
-      </el-col>
-      <el-col class="text-center" :span="2">
-        <span class="text-gray-500">-</span>
-      </el-col>
-      <el-col :span="11">
-        <el-form-item prop="date2">
-          <el-time-picker
-            v-model="ruleForm.date2"
-            placeholder="Pick a time"
-            style="width: 100%"
-          ></el-time-picker>
-        </el-form-item>
-      </el-col>
-    </el-form-item>
-    <el-form-item label="Instant delivery" prop="delivery">
-      <el-switch v-model="ruleForm.delivery"></el-switch>
-    </el-form-item>
-    <el-form-item label="Activity type" prop="type">
-      <el-checkbox-group v-model="ruleForm.type">
-        <el-checkbox label="Online activities" name="type"></el-checkbox>
-        <el-checkbox label="Promotion activities" name="type"></el-checkbox>
-        <el-checkbox label="Offline activities" name="type"></el-checkbox>
-        <el-checkbox label="Simple brand exposure" name="type"></el-checkbox>
-      </el-checkbox-group>
-    </el-form-item>
-    <el-form-item label="Resources" prop="resource">
-      <el-radio-group v-model="ruleForm.resource">
-        <el-radio label="Sponsorship"></el-radio>
-        <el-radio label="Venue"></el-radio>
-      </el-radio-group>
-    </el-form-item>
-    <el-form-item label="Activity form" prop="desc">
-      <el-input v-model="ruleForm.desc" type="textarea"></el-input>
-    </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="submitForm(ruleFormRef)"
-        >Create</el-button
-      >
-      <el-button @click="resetForm(ruleFormRef)">Reset</el-button>
-    </el-form-item>
-  </el-form>
+  <div class="blogEdit">
+    <Header></Header>
+    <el-form
+      ref="ruleFormRef"
+      :model="ruleForm"
+      :rules="rules"
+      label-width="120px"
+      class="demo-ruleForm"
+      :size="formSize"
+    >
+      <el-form-item label="标题" prop="title">
+        <el-input
+          v-model="ruleForm.title"
+          maxlength="20"
+          show-word-limit
+        ></el-input>
+      </el-form-item>
+      <el-form-item label="描述" prop="description">
+        <el-input
+          v-model="ruleForm.description"
+          type="textarea"
+          :autosize="{ minRows: 2, maxRows: 4 }"
+        ></el-input>
+      </el-form-item>
+      <el-form-item label="内容" prop="content">
+        <v-md-editor v-model="ruleForm.content" height="400px"></v-md-editor>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="submitForm(ruleFormRef)"
+          >{{ submitMsg }}</el-button
+        >
+        <el-button @click="resetForm(ruleFormRef)">重置</el-button>
+      </el-form-item>
+    </el-form>
+  </div>
 </template>
 
 <script lang="ts" setup>
 // eslint-disable-next-line no-unused-vars
 import Header from "@/components/BlogHeader.vue";
 import { reactive, ref } from "vue";
-import type { ElForm } from "element-plus";
+// import { ElForm, ElMessageBox } from "element-plus";
+import { Action, ElForm } from "element-plus";
+import axios from "axios";
+import router from "@/router";
+import { useRoute } from "vue-router";
 
 type FormInstance = InstanceType<typeof ElForm>;
 
-const formSize = ref("");
+const submitMsg = ref("创建");
+
+const formSize = ref(undefined);
 const ruleFormRef = ref<FormInstance>();
 const ruleForm = reactive({
-  name: "",
-  region: "",
-  date1: "",
-  date2: "",
-  delivery: false,
-  type: [],
-  resource: "",
-  desc: "",
+  title: "",
+  description: "",
+  content: "",
 });
 
+// 如果有设置id
+const route = useRoute();
+if (route.params.blogId) {
+  const blogId = Number.parseInt(route.params.blogId as string);
+  if (blogId !== NaN) {
+    // console.log(route.params.blogId);
+    axios.get("/blog/" + route.params.blogId).then((res: any) => {
+      console.log(res);
+      const blog = res.data.data;
+      ruleForm.content = blog.content;
+      ruleForm.description = blog.description;
+      ruleForm.title = blog.title;
+      submitMsg.value = "提交";
+    });
+  }
+}
+
 const rules = reactive({
-  name: [
+  title: [
     {
       required: true,
-      message: "Please input Activity name",
+      message: "请输入标题",
       trigger: "blur",
     },
     {
-      min: 3,
-      max: 5,
-      message: "Length should be 3 to 5",
+      min: 2,
+      max: 20,
+      message: "长度在2~20之间",
       trigger: "blur",
     },
   ],
-  region: [
+  description: [
     {
       required: true,
-      message: "Please select Activity zone",
-      trigger: "change",
+      message: "请输入描述",
+      trigger: "blur",
     },
   ],
-  date1: [
-    {
-      type: "date",
-      required: true,
-      message: "Please pick a date",
-      trigger: "change",
-    },
-  ],
-  date2: [
-    {
-      type: "date",
-      required: true,
-      message: "Please pick a time",
-      trigger: "change",
-    },
-  ],
-  type: [
-    {
-      type: "array",
-      required: true,
-      message: "Please select at least one activity type",
-      trigger: "change",
-    },
-  ],
-  resource: [
+  content: [
     {
       required: true,
-      message: "Please select activity resource",
-      trigger: "change",
-    },
-  ],
-  desc: [
-    {
-      required: true,
-      message: "Please input activity form",
+      message: "请输入内容",
       trigger: "blur",
     },
   ],
@@ -165,7 +119,20 @@ const submitForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   formEl.validate((valid) => {
     if (valid) {
-      console.log("submit!");
+      axios
+        .post("/blog/edit", ruleForm, {
+          headers: {
+            Authorization: localStorage.getItem("token") as string,
+          },
+        })
+        .then(() => {
+          ElMessageBox.alert("添加成功", "博客", {
+            confirmButtonText: "OK",
+            callback: (action: Action) => {
+              router.push("/blogs");
+            },
+          });
+        });
     } else {
       console.log("error submit!");
       return false;
@@ -178,3 +145,9 @@ const resetForm = (formEl: FormInstance | undefined) => {
   formEl.resetFields();
 };
 </script>
+<style scoped>
+.demo-ruleForm {
+  max-width: 900px;
+  margin: 10px auto;
+}
+</style>

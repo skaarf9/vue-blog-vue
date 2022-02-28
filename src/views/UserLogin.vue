@@ -2,7 +2,7 @@
  * @Author: skaarf9
  * @LastEditors: skaarf9
  * @Date: 2022-02-25 15:39:57
- * @LastEditTime: 2022-02-27 21:05:43
+ * @LastEditTime: 2022-02-28 20:28:02
  * @Description: file content
  * @FilePath: \vueblog-vue\src\views\UserLogin.vue
 -->
@@ -46,10 +46,10 @@
 
 <script lang="ts" setup>
 import { ref, reactive } from "vue";
-import type { ElForm } from "element-plus";
 import axios from "axios";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import type { ElForm } from "element-plus";
 
 const store = useStore();
 const router = useRouter();
@@ -120,28 +120,18 @@ const resetForm = (formEl: FormInstance | undefined) => {
 };
 </script>
 <style scoped>
-.login .el-header,
-.login .el-footer {
+.login .el-header {
   background-color: #b3c0d1;
   color: var(--el-text-color-primary);
   text-align: center;
   line-height: 60px;
 }
-.login .el-footer {
-  line-height: 60px;
-}
 .logo {
   height: 50px;
-  margin-top: 10px;
-  position: absolute;
+  margin-top: 3px;
+  /* position: absolute;
   margin-left: 15px;
-  left: 0%;
-}
-.login .el-aside {
-  background-color: #d3dce6;
-  color: var(--el-text-color-primary);
-  text-align: center;
-  line-height: 200px;
+  left: 0%; */
 }
 
 .login .el-main {
